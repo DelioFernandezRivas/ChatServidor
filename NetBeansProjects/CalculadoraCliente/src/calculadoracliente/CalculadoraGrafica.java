@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,10 +27,11 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
      */
     String numero, cad2, tipo;
     String resultado = "";
-
+    
     String urlpuerto = "localhost";
 
     int puertoentrada = 1111;
+    Socket sc1 = new Socket(urlpuerto, puertoentrada);
     String numero1 = "1";
     String numero2 = "2";
     String numero3 = "3";
@@ -39,49 +42,42 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
     String numero8 = "8";
     String numero9 = "9";
     String numero0 = "0";
+    String mas = "+";
+    String menos = "-";
+    String multiplicar = "*";
+    String dividir = "/";
+    InputStream is = sc1.getInputStream();
+    InputStreamReader isr = new InputStreamReader(System.in);
+    BufferedReader bf = new BufferedReader(isr);
+    OutputStream os1 = sc1.getOutputStream();
+    DataOutputStream dos1 = new DataOutputStream(os1);
+    DataInputStream dis = new DataInputStream(is);
 
-    public CalculadoraGrafica() {
+    public CalculadoraGrafica() throws IOException {
         initComponents();
+       jTextField1.setText("");
+
        
-        
-   
+//        System.out.println("Que tipo de operacion quieres");
+//        System.out.println("1)Suma 2)Resta 3)Multiplicacion 4)Division");
+//        tipo = bf.readLine();
+//        dos1.writeUTF(tipo);
+//
+//        System.out.println("Dame un numero para enviar al servidor: ");
+//        numero = bf.readLine();
+//        dos1.writeUTF(numero);
+//
+//        System.out.println("Dame un otro numero para enviar al servidor: ");
+//        numero = bf.readLine();
+//        dos1.writeUTF(numero);
+//
+//        resultado = dis.readUTF();
+//        System.out.println("El resultado es: " + resultado);
+//
+//        dos1.flush();
+//        dos1.close();
 
     
-        try{
-            Socket sc1 = new Socket(urlpuerto, puertoentrada);
-        InputStreamReader isr = new InputStreamReader(System.in);
-        InputStream is = sc1.getInputStream();
-        BufferedReader bf = new BufferedReader(isr);
-        OutputStream os1 = sc1.getOutputStream();
-        DataOutputStream dos1 = new DataOutputStream(os1);
-        DataInputStream dis = new DataInputStream(is);
-
-        System.out.println("Que tipo de operacion quieres");
-        System.out.println("1)Suma 2)Resta 3)Multiplicacion 4)Division");
-        tipo = bf.readLine();
-        dos1.writeUTF(tipo);
-
-        System.out.println("Dame un numero para enviar al servidor: ");
-        numero = bf.readLine();
-        dos1.writeUTF(numero);
-
-        System.out.println("Dame un otro numero para enviar al servidor: ");
-        numero = bf.readLine();
-        dos1.writeUTF(numero);
-
-        resultado = dis.readUTF();
-        System.out.println("El resultado es: " + resultado);
-
-        dos1.flush();
-        dos1.close();
-
-    }
-    catch(IOException e
-
-    
-        ){
-        System.out.println("Error : no se encontro el servidor");
-    }
 }
 
 /**
@@ -110,6 +106,7 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
         Boton13 = new javax.swing.JButton();
         Boton12 = new javax.swing.JButton();
         Boton11 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,6 +125,11 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
         });
 
         Boton2.setText("2");
+        Boton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton2ActionPerformed(evt);
+            }
+        });
 
         Boton5.setText("5");
         Boton5.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +139,11 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
         });
 
         Boton3.setText("3");
+        Boton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton3ActionPerformed(evt);
+            }
+        });
 
         Boton7.setText("7");
         Boton7.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +180,6 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("jTextField1");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -211,6 +217,13 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("=");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -218,32 +231,31 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
             .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Boton1)
-                            .addComponent(Boton3)
-                            .addComponent(Boton2))
-                        .addGap(52, 52, 52)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Boton5)
-                            .addComponent(Boton6)
-                            .addComponent(Boton0)
-                            .addComponent(Boton4))
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Boton7)
-                            .addComponent(Boton8)
-                            .addComponent(Boton9))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Boton13)
-                            .addComponent(Boton10)
-                            .addComponent(Boton12)
-                            .addComponent(Boton11)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Boton1)
+                    .addComponent(Boton3)
+                    .addComponent(Boton2))
+                .addGap(52, 52, 52)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Boton5)
+                    .addComponent(Boton6)
+                    .addComponent(Boton0)
+                    .addComponent(Boton4))
+                .addGap(46, 46, 46)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Boton7)
+                    .addComponent(Boton8)
+                    .addComponent(Boton9)
+                    .addComponent(jButton1))
+                .addGap(73, 73, 73)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Boton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Boton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Boton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Boton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,44 +263,39 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(133, 133, 133)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(142, 142, 142)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Boton1)
                     .addComponent(Boton4)
                     .addComponent(Boton7)
-                    .addComponent(Boton10))
+                    .addComponent(Boton10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Boton11)
                     .addComponent(Boton8)
                     .addComponent(Boton2)
                     .addComponent(Boton5))
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Boton3)
+                    .addComponent(Boton6)
+                    .addComponent(Boton9)
+                    .addComponent(Boton12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Boton12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Boton13))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Boton3)
-                            .addComponent(Boton6)
-                            .addComponent(Boton9))
-                        .addGap(18, 18, 18)
-                        .addComponent(Boton0)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Boton0)
+                        .addComponent(jButton1))
+                    .addComponent(Boton13))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,31 +306,54 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Boton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton4ActionPerformed
-        numero = numero4+numero;
+        
+            numero = numero4;
+            jTextField1.setText(jTextField1.getText()+numero4);
+       
     }//GEN-LAST:event_Boton4ActionPerformed
 
     private void Boton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton5ActionPerformed
-        numero = numero5+numero;
+        
+            numero = numero5;
+            jTextField1.setText(jTextField1.getText()+numero5);
+            
+       
     }//GEN-LAST:event_Boton5ActionPerformed
 
     private void Boton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton7ActionPerformed
-        numero = numero7+numero;
+        
+            numero = numero7;
+            jTextField1.setText(jTextField1.getText()+numero7);
+            
+        
     }//GEN-LAST:event_Boton7ActionPerformed
 
     private void Boton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton6ActionPerformed
-        numero = numero6+numero;
+       
+            numero = numero6;
+            jTextField1.setText(jTextField1.getText()+numero6);
+       
     }//GEN-LAST:event_Boton6ActionPerformed
 
     private void Boton0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton0ActionPerformed
-        numero = numero0+numero;
+        
+            numero = numero0;
+            jTextField1.setText(jTextField1.getText()+numero0);
+       
     }//GEN-LAST:event_Boton0ActionPerformed
 
     private void Boton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton8ActionPerformed
-        numero = numero8+numero;
+        
+            numero = numero8;
+            jTextField1.setText(jTextField1.getText()+numero8);
+        
     }//GEN-LAST:event_Boton8ActionPerformed
 
     private void Boton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton9ActionPerformed
-        numero = numero9+numero;
+        
+            numero = numero9;
+            jTextField1.setText(jTextField1.getText()+numero9);
+         
     }//GEN-LAST:event_Boton9ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -331,25 +361,93 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void Boton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton10ActionPerformed
+        try {
+            dos1.writeUTF(jTextField1.getText());
+            jTextField1.setText(mas);
+            
+            jTextField1.setText("");
+            
+            
+            
+            dos1.writeUTF(mas);
+        } catch (IOException ex) {
+            Logger.getLogger(CalculadoraGrafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
        
     }//GEN-LAST:event_Boton10ActionPerformed
 
     private void Boton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton13ActionPerformed
-       
+        try {
+            dos1.writeUTF(jTextField1.getText());
+            jTextField1.setText(dividir);
+            
+            jTextField1.setText("");
+            
+            dos1.writeUTF(dividir);
+        } catch (IOException ex) {
+            Logger.getLogger(CalculadoraGrafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Boton13ActionPerformed
 
     private void Boton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton12ActionPerformed
-        
+        try {
+            dos1.writeUTF(jTextField1.getText());
+            jTextField1.setText(multiplicar);
+            
+            jTextField1.setText("");
+            
+            
+            dos1.writeUTF(multiplicar);
+        } catch (IOException ex) {
+            Logger.getLogger(CalculadoraGrafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Boton12ActionPerformed
 
     private void Boton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton11ActionPerformed
-       
+        try {
+            dos1.writeUTF(jTextField1.getText());
+            jTextField1.setText(menos);
+            
+            jTextField1.setText("");
+            
+            dos1.writeUTF(menos);
+        } catch (IOException ex) {
+            Logger.getLogger(CalculadoraGrafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Boton11ActionPerformed
 
     private void Boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton1ActionPerformed
-        numero = numero1+numero;
         
+            numero = numero1+numero;
+            jTextField1.setText(jTextField1.getText()+numero1);
+         
     }//GEN-LAST:event_Boton1ActionPerformed
+
+    private void Boton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton2ActionPerformed
+        
+            numero = numero2+numero;
+            jTextField1.setText(jTextField1.getText()+numero2);
+         
+    }//GEN-LAST:event_Boton2ActionPerformed
+
+    private void Boton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton3ActionPerformed
+        
+            numero = numero3+numero;
+            jTextField1.setText(jTextField1.getText()+numero3);
+        
+    }//GEN-LAST:event_Boton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            dos1.writeUTF(jTextField1.getText());
+            String resultado = dis.readUTF();
+            jTextField1.setText(resultado);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(CalculadoraGrafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -393,7 +491,11 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CalculadoraGrafica().setVisible(true);
+                try {
+                    new CalculadoraGrafica().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(CalculadoraGrafica.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -413,6 +515,7 @@ public class CalculadoraGrafica extends javax.swing.JFrame {
     private javax.swing.JButton Boton7;
     private javax.swing.JButton Boton8;
     private javax.swing.JButton Boton9;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
