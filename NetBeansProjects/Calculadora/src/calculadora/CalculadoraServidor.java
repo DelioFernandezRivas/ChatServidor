@@ -32,7 +32,7 @@ public class CalculadoraServidor  {
             //String url = "localhost";
             String numero1,numero2, tipo;
             int puerto = 1111;
-            int resultado = 0 ;
+            float resultado = 0 ;
             
             
             try { 
@@ -65,21 +65,21 @@ public class CalculadoraServidor  {
                 x= Integer.parseInt(numero1);
                 y = Integer.parseInt(numero2);
                 
-                if(tipo.equals("1")){
+                if(tipo.equals("+")){
                     resultado = x+y ;
                 
                 }
                 
-                else if(tipo.equals("2")){
+                else if(tipo.equals("-")){
                     resultado = x-y;
                 
                 }
                 
-                else if (tipo.equals("3")){
+                else if (tipo.equals("*")){
                 resultado = x * y;
                 
                 }
-                else if (tipo.equals("4")){
+                else if (tipo.equals("/")){
                 resultado = x/y ;
                 
                 }
@@ -90,7 +90,8 @@ public class CalculadoraServidor  {
                 }
                 
                 System.out.println("El resultado es "+ resultado);
-                dos1.writeUTF(Integer.toString(resultado));
+                dos1.writeUTF(Float.toString(resultado));
+                
                 
                 s1.close();
                 dis.close();
